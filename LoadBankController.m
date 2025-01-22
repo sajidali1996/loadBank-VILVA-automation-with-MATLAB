@@ -41,11 +41,13 @@ classdef LoadBankController
 %         function status = checkStatus(~)
 %             status = true;
 %         end
-        function setRealPower(obj,Phase,RealPower)
+        function setRealPower(~,Phase,RealPower)
             %This function Sets the RealPower on selected Phase
             %Syntax
             %   setRealPower(2,5500)
-            if isnumeric(Phase) && (Phase==1 || Phase == 2 || Phase ==3)
+            disp(Phase)
+            disp(RealPower)
+            if ~isnumeric(Phase) && (Phase==1 || Phase == 2 || Phase ==3)
                errordlg('Phase parameter must be 1, 2 or 3', 'Error');
             end
 
@@ -53,21 +55,21 @@ classdef LoadBankController
                 case 1
                     [slave_id,combination]=findCombination_AR(RealPower);
                     for i=1:length(combination)
-                        write(obj,"coils",i,1,slave_id);
+                        write(obj,"coils",combination(i),1,slave_id);
                         pause(1)
                     end
 
                 case 2
                     [slave_id,combination]=findCombination_BR(RealPower);
                     for i=1:length(combination)
-                        write(obj,"coils",i,1,slave_id);
+                        write(obj,"coils",combination(i),1,slave_id);
                         pause(1)
                     end
 
                 case 3
                     [slave_id,combination]=findCombination_CR(RealPower);
                     for i=1:length(combination)
-                        write(obj,"coils",i,1,slave_id);
+                        write(obj,"coils",combination(i),1,slave_id);
                     end
             end
 
