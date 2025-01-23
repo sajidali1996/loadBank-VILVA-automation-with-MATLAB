@@ -42,6 +42,7 @@ classdef LoadBankController
 %             status = true;
 %         end
         function setRealPower(obj,Phase,RealPower)
+            RealPower=round((120^2/101^2)*RealPower);
             %This function Sets the RealPower on selected Phase
             %Syntax
             %   setRealPower(2,5500)
