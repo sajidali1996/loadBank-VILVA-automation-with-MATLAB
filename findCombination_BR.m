@@ -21,7 +21,9 @@ function [slave_ID,  combination] = findCombination_BR(inputValue)
     % Define the data
     slave_ID=1; % This value comes from programming manual of the equipment
     R = [100, 200, 200, 500, 1000, 1000, 2000, 2000];
-    address = [24, 25, 26, 27, 28, 29, 30, 31];
+    %address = [24, 25, 26, 27, 28, 29, 30, 31];
+    address = [0, 1, 2, 3, 4, 5, 6, 7];
+    address = address+1;
     
     % Get all combinations of indices
     n = numel(R);

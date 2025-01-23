@@ -27,11 +27,11 @@ classdef LoadBankController
             obj.LoadBank.Timeout = 3; % Set timeout
             fprintf('Communication established successfully.\n');
         end
-        function testFunction(~)
-            [a,b] = findCombination_AR(5500);
-            disp(a)
-            disp(b)
-        end
+%         function testFunction(~)
+%             [a,b] = findCombination_AR(5500);
+%             disp(a)
+%             disp(b)
+%         end
 
         %perform sanity check 
 
@@ -41,54 +41,58 @@ classdef LoadBankController
 %         function status = checkStatus(~)
 %             status = true;
 %         end
-        function setRealPower(~,Phase,RealPower)
+        function setRealPower(obj,Phase,RealPower)
             %This function Sets the RealPower on selected Phase
             %Syntax
             %   setRealPower(2,5500)
-            disp(Phase)
-            disp(RealPower)
+            valueArray=zeros(1,8);
             if ~isnumeric(Phase) && (Phase==1 || Phase == 2 || Phase ==3)
                errordlg('Phase parameter must be 1, 2 or 3', 'Error');
             end
+            
 
             switch Phase
                 case 1
                     [slave_id,combination]=findCombination_AR(RealPower);
                     for i=1:length(combination)
-                        write(obj,"coils",combination(i),1,slave_id);
-                        pause(1)
+                        valueArray(combination(i))=1;
                     end
+                    write(obj.LoadBank,"coils",1,valueArray,slave_id)
+                    disp("Turned ON the following Loads on Phase 1")
+                    disp(valueArray)
+
 
                 case 2
                     [slave_id,combination]=findCombination_BR(RealPower);
                     for i=1:length(combination)
-                        write(obj,"coils",combination(i),1,slave_id);
-                        pause(1)
+                        valueArray(combination(i))=1;
                     end
+                    write(obj.LoadBank,"coils",25,valueArray,slave_id)
+                    disp("Turned ON the following Loads on Phase 2")
+                    disp(valueArray)
 
                 case 3
                     [slave_id,combination]=findCombination_CR(RealPower);
                     for i=1:length(combination)
-                        write(obj,"coils",combination(i),1,slave_id);
+                        valueArray(combination(i))=1;
                     end
+                    write(obj.LoadBank,"coils",17,valueArray,slave_id)
+                    disp("Turned ON the following Loads on Phase 3")
+                    disp(valueArray)
             end
 
         end
 
         function resetLoad(obj)
-            %resetting 
-            for i=0:31
-                write(obj.LoadBank,"coils",i,1,1);
-                pause(0.1)
-            end
-            for j=0:31
-                write(obj.LoadBank,"coils",i,1,2);
-                pause(0.1)
-            end
-            for k=0:7
-                write(obj.LoadBank,"coils",i,1,3);
-                pause(0.1)
-            end
+            %resetting
+            %write(obj.LoadBank,"coils",startingAddres,values,slaveID)
+            write(obj.LoadBank,"coils",1,zeros(1,8),1)
+            write(obj.LoadBank,"coils",25,zeros(1,8),1)
+            write(obj.LoadBank,"coils",16,zeros(1,8),2)
+
+
+
+       
 
         end
         %turn on Load
