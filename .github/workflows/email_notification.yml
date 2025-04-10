@@ -15,11 +15,11 @@ jobs:
           SMTP_HOST: smtp.skyelectric.com
           SMTP_PORT: 587
           SMTP_USERNAME: sajid.ali@skyelectric.com
-          SMTP_PASSWORD: diutspmvuoexrwjr
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           TO_EMAIL: "sajid.ali@skyelectric.com"
           FROM_EMAIL: "sajid.ali@skyelectric.com"
         run: |
           SUBJECT="GitHub Notification - Push Event"
-          BODY="Hello,\n\nThere has been a push to the repository ${{ github.repository }}.\n\nBest Regards,\nGitHub Actions"
+          BODY="Hello,\n\nThere has been a push to the repository ${GITHUB_REPOSITORY}.\n\nBest Regards,\nGitHub Actions"
 
-          echo -e "Subject:$SUBJECT\nFrom:$FROM_EMAIL\nTo:$TO_EMAIL\n\n$BODY" | msmtp --host=$SMTP_HOST --port=$SMTP_PORT --auth=login --user=$SMTP_USERNAME --passwordeval="echo $SMTP_PASSWORD" $TO_EMAIL
+          echo -e "Subject:$SUBJECT\nFrom:$FROM_EMAIL\nTo:$TO_EMAIL\n\n$BODY" | msmtp --host=$SMTP_HOST --port=$SMTP_PORT --auth=login --user=$SMTP_USERNAME --passwordeval="echo $SMTP_PASSWORD" --tls $TO_EMAIL
