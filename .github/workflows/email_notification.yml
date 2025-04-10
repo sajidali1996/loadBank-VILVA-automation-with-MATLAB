@@ -12,14 +12,14 @@ jobs:
     steps:
       - name: Send Email Notification
         env:
-          SMTP_HOST: ${{ secrets.SMTP_HOST }}
-          SMTP_PORT: ${{ secrets.SMTP_PORT }}
-          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
-          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_HOST: smtp.gmail.com
+          SMTP_PORT: 587
+          SMTP_USERNAME: sajid.ali@skyelectric.com
+          SMTP_PASSWORD: myPassword123
           TO_EMAIL: "sajid.ali@skyelectric.com"
           FROM_EMAIL: "sajid.ali@skyelectric.com"
         run: |
           SUBJECT="GitHub Notification - Push Event"
           BODY="Hello,\n\nThere has been a push to the repository ${{ github.repository }}.\n\nBest Regards,\nGitHub Actions"
-          
+
           echo -e "Subject:$SUBJECT\nFrom:$FROM_EMAIL\nTo:$TO_EMAIL\n\n$BODY" | msmtp --host=$SMTP_HOST --port=$SMTP_PORT --auth=login --user=$SMTP_USERNAME --passwordeval="echo $SMTP_PASSWORD" $TO_EMAIL
