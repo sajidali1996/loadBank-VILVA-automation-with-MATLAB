@@ -15,7 +15,7 @@ jobs:
           SMTP_HOST: smtp.gmail.com
           SMTP_PORT: 587
           SMTP_USERNAME: sajid.ali@skyelectric.com
-          SMTP_PASSWORD: myPassword123
+          SMTP_PASSWORD: diutspmvuoexrwjr
           TO_EMAIL: "sajid.ali@skyelectric.com"
           FROM_EMAIL: "sajid.ali@skyelectric.com"
         run: |
