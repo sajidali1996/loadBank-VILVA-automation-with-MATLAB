@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Send Email Notification
         env:
-          SMTP_HOST: smtp.gmail.com
+          SMTP_HOST: smtp.skyelectric.com
           SMTP_PORT: 587
           SMTP_USERNAME: sajid.ali@skyelectric.com
           SMTP_PASSWORD: diutspmvuoexrwjr
