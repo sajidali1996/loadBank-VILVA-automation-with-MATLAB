@@ -16,7 +16,7 @@ jobs:
           SMTP_PORT: 587
           SMTP_USERNAME: sajid.ali@skyelectric.com
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-          TO_EMAIL: "sajid.ali@skyelectric.com"
+          TO_EMAIL: "sajidali75092@gmail.com"
           FROM_EMAIL: "sajid.ali@skyelectric.com"
         run: |
           SUBJECT="GitHub Notification - Push Event"
