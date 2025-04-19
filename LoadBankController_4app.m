@@ -2,6 +2,7 @@ classdef LoadBankController_4app
     properties
         PortNumber % Port number for communication
         LoadBank   % Modbus object for communication
+        loadTimerObj % Timer object for heartbeat
     end
     
     methods
@@ -644,19 +645,23 @@ classdef LoadBankController_4app
         % filepath: c:\Users\Sajid Ali\Downloads\2025-04-18\loadBank\loadBank-VILVA-automation-with-MATLAB\LoadBankController_4app.m
         function startHeartbeat(obj, interval)
             % Start a timer to periodically check the Modbus connection
-            t = timer('ExecutionMode', 'fixedRate', ...
+            obj.loadTimerObj = timer('ExecutionMode', 'fixedRate', ...
                     'Period', interval, ...
                     'TimerFcn', @(~,~) obj.heartbeat());
-            start(t);
+            start(obj.loadTimerObj);
             fprintf('Heartbeat started with an interval of %.2f seconds.\n', interval);
         end
 
         %stop heartbeat
-        function stopHeartbeat(~)
-            % Stop the heartbeat timer
-            stop(timerfindall);
-            delete(timerfindall);
-            fprintf('Heartbeat stopped.\n');
+        function stopHeartbeat(obj)
+            % Stop the specified heartbeat timer
+            if isvalid(obj.loadTimerObj)
+            stop(obj.loadTimerObj);
+            delete(obj.loadTimerObj);
+            fprintf('Specified heartbeat timer stopped.\n');
+            else
+            fprintf('The specified timer is not valid or already deleted.\n');
+            end
         end
 
     end
